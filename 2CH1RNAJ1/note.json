@@ -1,0 +1,81 @@
+{
+  "paragraphs": [
+    {
+      "text": "%r\n\ndata(iris)  # Load the dataset iris\nstr(iris)  # Structure of the dataset\nmean(iris$Sepal.Length)\nstr(iris$Sepal.Length)\ntapply(iris$Sepal.Length, iris$Species, mean)",
+      "user": "admin",
+      "dateUpdated": "Apr 24, 2017 4:38:56 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {},
+          "map": {
+            "baseMapType": "Streets",
+            "isOnline": true,
+            "pinCols": []
+          }
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/r"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1493077025066_898791562",
+      "id": "20170424-163705_2041572683",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "\u0027data.frame\u0027:   150 obs. of  5 variables:\n $ Sepal.Length: num  5.1 4.9 4.7 4.6 5 5.4 4.6 5 4.4 4.9 …\n $ Sepal.Width : num  3.5 3 3.2 3.1 3.6 3.9 3.4 3.4 2.9 3.1 …\n $ Petal.Length: num  1.4 1.4 1.3 1.5 1.4 1.7 1.4 1.5 1.4 1.5 …\n $ Petal.Width : num  0.2 0.2 0.2 0.2 0.2 0.4 0.3 0.2 0.2 0.1 …\n $ Species     : Factor w/ 3 levels “setosa”,“versicolor”,..: 1 1 1 1 1 1 1 1 1 1 …\n[1] 5.843333\n num [1:150] 5.1 4.9 4.7 4.6 5 5.4 4.6 5 4.4 4.9 …\n    setosa versicolor  virginica \n     5.006      5.936      6.588"
+      },
+      "dateCreated": "Apr 24, 2017 4:37:05 PM",
+      "dateStarted": "Apr 24, 2017 4:38:56 PM",
+      "dateFinished": "Apr 24, 2017 4:38:59 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%r\n",
+      "dateUpdated": "Apr 24, 2017 4:38:56 PM",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1493077136681_1979672171",
+      "id": "20170424-163856_306329339",
+      "dateCreated": "Apr 24, 2017 4:38:56 PM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "test",
+  "id": "2CH1RNAJ1",
+  "angularObjects": {
+    "2CABMD2PS:shared_process": [],
+    "2CC94X3X4:shared_process": [],
+    "2CBV5VUC1:shared_process": [],
+    "2CDAB1DNS:shared_process": [],
+    "2CCKEZZGZ:shared_process": [],
+    "2CBNE24RK:shared_process": [],
+    "2CAHHQMZ2:shared_process": [],
+    "2CB3CJFJN:shared_process": [],
+    "2CD2259ZQ:shared_process": [],
+    "2CE2PN9UN:shared_process": [],
+    "2CC2E3E3M:shared_process": [],
+    "2CC712B28:shared_process": [],
+    "2CD9ESB59:shared_process": [],
+    "2CAKQYMVK:shared_process": [],
+    "2CDJDNXSP:shared_process": []
+  },
+  "config": {},
+  "info": {}
+}
