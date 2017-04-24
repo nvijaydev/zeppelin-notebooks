@@ -1,0 +1,98 @@
+{
+  "paragraphs": [
+    {
+      "text": "import org.apache.spark.h2o._\nval h2oContext \u003d H2OContext.getOrCreate(sc)",
+      "user": "admin",
+      "dateUpdated": "Apr 24, 2017 2:19:46 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {},
+          "map": {
+            "baseMapType": "Streets",
+            "isOnline": true,
+            "pinCols": []
+          }
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1493068444189_911118695",
+      "id": "20170424-141404_951981209",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "\nimport org.apache.spark.h2o._\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nh2oContext: org.apache.spark.h2o.H2OContext \u003d\n\nSparkling Water Context:\n * H2O name: sparkling-water-root_2042215791\n * cluster size: 2\n * list of used nodes:\n  (executorId, host, port)\n  ------------------------\n  (0,10.35.217.2,54321)\n  (1,10.35.217.6,54321)\n  ------------------------\n\n  Open H2O Flow in browser: http://10.35.217.2:54323 (CMD + click in Mac OSX)\n\n"
+      },
+      "dateCreated": "Apr 24, 2017 2:14:04 PM",
+      "dateStarted": "Apr 24, 2017 2:19:46 PM",
+      "dateFinished": "Apr 24, 2017 2:20:04 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "import h2oContext._\nimport h2oContext.implicits._",
+      "dateUpdated": "Apr 24, 2017 2:20:25 PM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {},
+          "map": {
+            "baseMapType": "Streets",
+            "isOnline": true,
+            "pinCols": []
+          }
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1493068786004_53419807",
+      "id": "20170424-141946_681186117",
+      "dateCreated": "Apr 24, 2017 2:19:46 PM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "Test",
+  "id": "2CGKDVRD7",
+  "angularObjects": {
+    "2CABMD2PS:shared_process": [],
+    "2CC94X3X4:shared_process": [],
+    "2CBV5VUC1:shared_process": [],
+    "2CDAB1DNS:shared_process": [],
+    "2CCKEZZGZ:shared_process": [],
+    "2CBNE24RK:shared_process": [],
+    "2CAHHQMZ2:shared_process": [],
+    "2CB3CJFJN:shared_process": [],
+    "2CD2259ZQ:shared_process": [],
+    "2CE2PN9UN:shared_process": [],
+    "2CC2E3E3M:shared_process": [],
+    "2CC712B28:shared_process": [],
+    "2CD9ESB59:shared_process": [],
+    "2CAKQYMVK:shared_process": [],
+    "2CDJDNXSP:shared_process": []
+  },
+  "config": {},
+  "info": {}
+}

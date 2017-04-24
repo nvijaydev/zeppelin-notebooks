@@ -1,0 +1,123 @@
+{
+  "paragraphs": [
+    {
+      "title": "PySpark classification using NLTK on Python 3",
+      "text": "%spark.pyspark\r\n\r\nfrom pyspark import SparkConf, SparkContext\r\nfrom sklearn.datasets import make_classification\r\nfrom sklearn.ensemble import ExtraTreesClassifier\r\nimport pandas as pd\r\nimport numpy as np\r\n\r\n# Build a classification task using 3 informative features\r\nX, y \u003d make_classification(n_samples\u003d12000,\r\n                           n_features\u003d10,\r\n                           n_informative\u003d3,\r\n                           n_redundant\u003d0,\r\n                           n_repeated\u003d0,\r\n                           n_classes\u003d2,\r\n                           random_state\u003d0,\r\n                           shuffle\u003dFalse)\r\n                           # Partition data\r\ndef dataPart(X, y, start, stop): return dict(X\u003dX[start:stop, :], y\u003dy[start:stop])\r\n\r\ndef train(data):\r\n    X \u003d data[\u0027X\u0027]\r\n    y \u003d data[\u0027y\u0027]\r\n    return ExtraTreesClassifier(n_estimators\u003d100,random_state\u003d0).fit(X,y)\r\n\r\n# Merge 2 Models\r\nfrom sklearn.base import copy\r\ndef merge(left,right):\r\n    new \u003d copy.deepcopy(left)\r\n    new.estimators_ +\u003d right.estimators_\r\n    new.n_estimators \u003d len(new.estimators_)  \r\n    return new\r\n\r\ndata \u003d [dataPart(X, y, 0, 4000), dataPart(X,y,4000,8000), dataPart(X,y,8000,12000)]\r\nforest \u003d sc.parallelize(data).map(train).reduce(merge)\r\nimportances \u003d forest.feature_importances_\r\nstd \u003d np.std([tree.feature_importances_ for tree in forest.estimators_],\r\n             axis\u003d0)\r\nindices \u003d np.argsort(importances)[::-1]\r\n\r\n# Print the feature ranking\r\nprint(\"Feature ranking:\")\r\nfor f in range(10):\r\n    print(\"%d. feature %d (%f)\" % (f + 1, indices[f], importances[indices[f]]))\r\n\r\n",
+      "user": "admin",
+      "dateUpdated": "Mar 29, 2017 10:59:07 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {},
+          "map": {
+            "baseMapType": "Streets",
+            "isOnline": true,
+            "pinCols": []
+          }
+        },
+        "enabled": true,
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1490810219438_-191223404",
+      "id": "20170329-105659_2040180234",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "Feature ranking:\n1. feature 1 (0.316693)\n2. feature 2 (0.257167)\n3. feature 0 (0.189512)\n4. feature 8 (0.034128)\n5. feature 5 (0.033914)\n6. feature 3 (0.033906)\n7. feature 7 (0.033751)\n8. feature 6 (0.033718)\n9. feature 9 (0.033677)\n10. feature 4 (0.033535)\n"
+      },
+      "dateCreated": "Mar 29, 2017 10:56:59 AM",
+      "dateStarted": "Mar 29, 2017 10:59:07 AM",
+      "dateFinished": "Mar 29, 2017 10:59:18 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\n\nfrom pyspark.mllib.tree import GradientBoostedTrees, GradientBoostedTreesModel\nfrom pyspark.mllib.util import MLUtils\n\n# Load and parse the data file.\ndata \u003d MLUtils.loadLibSVMFile(sc, \u0027dtap://TenantStorage/data/samples/sample_libsvm_data.txt\u0027)\n# Split the data into training and test sets (30% held out for testing)\n(trainingData, testData) \u003d data.randomSplit([0.7, 0.3])\n\n# Train a GradientBoostedTrees model.\n#  Notes: (a) Empty categoricalFeaturesInfo indicates all features are continuous.\n#         (b) Use more iterations in practice.\nmodel \u003d GradientBoostedTrees.trainClassifier(trainingData,\n                                             categoricalFeaturesInfo\u003d{}, numIterations\u003d3)\n\n# Evaluate model on test instances and compute test error\npredictions \u003d model.predict(testData.map(lambda x: x.features))\nlabelsAndPredictions \u003d testData.map(lambda lp: lp.label).zip(predictions)\ntestErr \u003d labelsAndPredictions.filter(lambda seq: seq[0] !\u003d seq[1]).count() / float(testData.count())\n\nprint(\u0027Test Error \u003d \u0027 + str(testErr))\nprint(\u0027Learned classification GBT model:\u0027)\nprint(model.toDebugString())\n\n# Save and load model\nmodel.save(sc, \u0027dtap://TenantStorage/models/GBModel\u0027)\nsameModel \u003d GradientBoostedTreesModel.load(sc,\n                                           \u0027dtap://TenantStorage/models/GBModel\u0027)",
+      "user": "admin",
+      "dateUpdated": "Mar 29, 2017 11:24:20 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {},
+          "map": {
+            "baseMapType": "Streets",
+            "isOnline": true,
+            "pinCols": []
+          }
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/python"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1490810647147_847210588",
+      "id": "20170329-110407_134373063",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "Test Error \u003d 0.02857142857142857\nLearned classification GBT model:\nTreeEnsembleModel classifier with 3 trees\n\n  Tree 0:\n    If (feature 434 \u003c\u003d 0.0)\n     If (feature 99 \u003c\u003d 0.0)\n      Predict: -1.0\n     Else (feature 99 \u003e 0.0)\n      Predict: 1.0\n    Else (feature 434 \u003e 0.0)\n     Predict: 1.0\n  Tree 1:\n    If (feature 434 \u003c\u003d 0.0)\n     If (feature 99 \u003c\u003d 0.0)\n      If (feature 512 \u003c\u003d 188.0)\n       Predict: -0.4768116880884702\n      Else (feature 512 \u003e 188.0)\n       Predict: -0.47681168808847035\n     Else (feature 99 \u003e 0.0)\n      Predict: 0.4768116880884694\n    Else (feature 434 \u003e 0.0)\n     If (feature 160 \u003c\u003d 121.0)\n      If (feature 294 \u003c\u003d 223.0)\n       Predict: 0.47681168808847024\n      Else (feature 294 \u003e 223.0)\n       Predict: 0.47681168808847024\n     Else (feature 160 \u003e 121.0)\n      Predict: 0.4768116880884712\n  Tree 2:\n    If (feature 434 \u003c\u003d 0.0)\n     If (feature 99 \u003c\u003d 0.0)\n      If (feature 328 \u003c\u003d 83.0)\n       Predict: -0.43819358104272055\n      Else (feature 328 \u003e 83.0)\n       Predict: -0.43819358104272066\n     Else (feature 99 \u003e 0.0)\n      Predict: 0.43819358104271977\n    Else (feature 434 \u003e 0.0)\n     If (feature 681 \u003c\u003d 0.0)\n      Predict: 0.4381935810427206\n     Else (feature 681 \u003e 0.0)\n      Predict: 0.4381935810427204\n\n"
+      },
+      "dateCreated": "Mar 29, 2017 11:04:07 AM",
+      "dateStarted": "Mar 29, 2017 11:24:20 AM",
+      "dateFinished": "Mar 29, 2017 11:24:32 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\n",
+      "dateUpdated": "Mar 29, 2017 11:13:36 AM",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1490811216664_-1597668934",
+      "id": "20170329-111336_973635180",
+      "dateCreated": "Mar 29, 2017 11:13:36 AM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "PySpark-Example",
+  "id": "2CBKFRQZE",
+  "angularObjects": {
+    "2CABMD2PS:shared_process": [],
+    "2CC94X3X4:shared_process": [],
+    "2CBV5VUC1:shared_process": [],
+    "2CDAB1DNS:shared_process": [],
+    "2CCKEZZGZ:shared_process": [],
+    "2CBNE24RK:shared_process": [],
+    "2CAHHQMZ2:shared_process": [],
+    "2CB3CJFJN:shared_process": [],
+    "2CD2259ZQ:shared_process": [],
+    "2CE2PN9UN:shared_process": [],
+    "2CC2E3E3M:shared_process": [],
+    "2CC712B28:shared_process": [],
+    "2CD9ESB59:shared_process": [],
+    "2CAKQYMVK:shared_process": [],
+    "2CDJDNXSP:shared_process": []
+  },
+  "config": {},
+  "info": {}
+}
